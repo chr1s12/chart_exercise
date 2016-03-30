@@ -13,6 +13,14 @@ public class ChartData implements Serializable {
 	private String name;
 	private double weight;
 
+	public ChartData(String name, double weight) {
+		this.name = name;
+		this.weight = weight;
+	}
+
+	public ChartData() {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
@@ -45,4 +53,25 @@ public class ChartData implements Serializable {
 		return name + ", " + weight;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ChartData chartData = (ChartData) o;
+
+		if (Double.compare(chartData.weight, weight) != 0) return false;
+		return name != null ? name.equals(chartData.name) : chartData.name == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		result = name != null ? name.hashCode() : 0;
+		temp = Double.doubleToLongBits(weight);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 }

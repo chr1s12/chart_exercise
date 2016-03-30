@@ -10,10 +10,7 @@ import java.util.Scanner;
 
 import de.guerz.domain.Chart;
 import de.guerz.domain.ChartData;
-import jxl.Cell;
-import jxl.CellType;
-import jxl.Sheet;
-import jxl.Workbook;
+import jxl.*;
 import jxl.read.biff.BiffException;
 
 public class ReadChartFile {
@@ -28,10 +25,12 @@ public class ReadChartFile {
 		File inputWorkbook = new File(inputFile);
 		Chart chart = new Chart();
 		chart.setName(inputWorkbook.getName());
-		List<ChartData> data = new ArrayList<ChartData>();
+		List<ChartData> data = new ArrayList<>();
 
+		WorkbookSettings ws = new WorkbookSettings();
+		ws.setEncoding("ISO-8859-1");
 		Workbook workbook;
-		workbook = Workbook.getWorkbook(inputWorkbook);
+		workbook = Workbook.getWorkbook(inputWorkbook, ws);
 		Sheet sheet = workbook.getSheet(0);
 
 		for (int i = 1; i < sheet.getRows(); i++) {
@@ -57,7 +56,7 @@ public class ReadChartFile {
 		File file = new File(inputFile);
 		Chart chart = new Chart();
 		chart.setName(file.getName());
-		List<ChartData> data = new ArrayList<ChartData>();
+		List<ChartData> data = new ArrayList<>();
 
 		Scanner inputStream = new Scanner(file);
 		inputStream.nextLine();

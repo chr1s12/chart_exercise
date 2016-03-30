@@ -1,21 +1,35 @@
 package de.guerz.dao;
 
+import de.guerz.domain.Chart;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+public class ChartDAO  implements IChartDAO {
 
-import de.guerz.domain.Chart;
+	private SessionFactory sessionFactory;
 
-public class ChartDAO extends HibernateDaoSupport implements IChartDAO {
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Chart> loadAllCharts() {
-		return (List<Chart>) getHibernateTemplate().find("from Chart");   //loadAll(Chart.class);
+		return (List<Chart>) new HibernateTemplate(sessionFactory).find("from Chart");   //loadAll(Chart.class);
 	}
+
+	// findChartByName(String name);
 
 	@Override
 	public Integer saveChart(Chart chart) {
-		return (Integer) getHibernateTemplate().save(chart);
+//		hibernateTemplate.getSessionFactory().getCurrentSession().setReadOnly(chart, false);
+//		hibernateTemplate.getSessionFactory().getCurrentSession().setFlushMode(FlushMode.AUTO);
+		//hibernateTemplate.setCheckWriteOperations(false)
+
+
+
+		return (Integer) new HibernateTemplate(sessionFactory).save(chart);
 	}
 }

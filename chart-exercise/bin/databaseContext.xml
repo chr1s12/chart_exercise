@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
@@ -41,9 +41,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/postgres" />
+		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/chart_exercise" />
 		<property name="user" value="postgres" />
-		<property name="password" value="pass" />
+		<property name="password" value="postgres" />
 	</bean>
 </beans>
 
