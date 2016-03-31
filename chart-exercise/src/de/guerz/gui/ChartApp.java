@@ -60,7 +60,7 @@ public class ChartApp {
     public ChartApp() {
         initialize();
 /*        XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
-        chartDAO = (IChartDAO) factory.getBean("chartDAO");
+        chartDAO = (ChartDAO) factory.getBean("chartDAO");
         readChartFile = (ReadChartFile) factory.getBean("readChartFile");*/
 
 

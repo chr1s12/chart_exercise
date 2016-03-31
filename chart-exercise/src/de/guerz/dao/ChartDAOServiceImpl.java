@@ -4,25 +4,22 @@ import de.guerz.domain.Chart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChartDAOServiceImpl implements ChartDAOService {
 
     @Autowired
-    private ChartDAO chartDAO;
+    private ChartRepository chartRepository;
 
     @Override
     public List<Chart> loadAllCharts() {
-        return chartDAO.loadAllCharts();
+        return new ArrayList<>(chartRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = false)
-    public Integer saveChart(Chart chart) {
-        return chartDAO.saveChart(chart);
-    }
-
-    public void setChartDAO(ChartDAO chartDAO) {
-        this.chartDAO = chartDAO;
+    public Chart saveChart(Chart chart) {
+        return chartRepository.save(chart);
     }
 }

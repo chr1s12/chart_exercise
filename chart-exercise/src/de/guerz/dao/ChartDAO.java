@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChartDAO {
 
-	@Autowired
+/*	@Autowired
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -18,7 +18,7 @@ public class ChartDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Chart> loadAllCharts() {
-		return (List<Chart>) new HibernateTemplate(sessionFactory).find("from Chart");   //loadAll(Chart.class);
+		return (List<Chart>) new HibernateTemplate(sessionFactory).find("from Chart");
 	}
 
 	// findChartByName(String name);
@@ -31,5 +31,5 @@ public class ChartDAO {
 
 
 		return (Integer) new HibernateTemplate(sessionFactory).save(chart);
-	}
+	}*/
 }

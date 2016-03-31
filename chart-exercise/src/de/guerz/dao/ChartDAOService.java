@@ -7,5 +7,5 @@ import java.util.List;
 public interface ChartDAOService {
     List<Chart> loadAllCharts();
 
-    Integer saveChart(Chart chart);
+    Chart saveChart(Chart chart);
 }
