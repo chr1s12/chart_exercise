@@ -1,8 +1,7 @@
 package de.guerz.gui;
 
 import de.guerz.bean.ApplContext;
-import de.guerz.dao.ChartDAO;
-import de.guerz.dao.IChartDAO;
+import de.guerz.dao.ChartDAOService;
 import de.guerz.domain.Chart;
 import de.guerz.domain.ChartData;
 import de.guerz.utils.ReadChartFile;
@@ -12,10 +11,8 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -32,7 +29,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class ChartApp {
 
     private ReadChartFile readChartFile;
-    private IChartDAO chartDAO;
+    private ChartDAOService chartDAOService;
     private JFrame frmChartapp;
     private JList<Chart> listChart;
     private JList<ChartData> listData;
@@ -62,14 +59,14 @@ public class ChartApp {
      */
     public ChartApp() {
         initialize();
-        XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+/*        XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
         chartDAO = (IChartDAO) factory.getBean("chartDAO");
-        readChartFile = (ReadChartFile) factory.getBean("readChartFile");
+        readChartFile = (ReadChartFile) factory.getBean("readChartFile");*/
 
 
-//        ApplicationContext ctx =  new AnnotationConfigApplicationContext(ApplContext.class);
-//        chartDAO = ctx.getBean(ChartDAO.class);
-//        readChartFile = ctx.getBean(ReadChartFile.class);
+        ApplicationContext ctx =  new AnnotationConfigApplicationContext(ApplContext.class);
+        chartDAOService = ctx.getBean(ChartDAOService.class);
+        readChartFile = ctx.getBean(ReadChartFile.class);
 
         updateList();
     }
@@ -201,17 +198,18 @@ public class ChartApp {
 
                 try {
                     try {
-                        chartDAO.saveChart(readChartFile.readXLSFile());
+                        chartDAOService.saveChart(readChartFile.readXLSFile());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     JOptionPane.showMessageDialog(null, "Datei erfolgreich in Datenbank gespeichert.", "Info", JOptionPane.PLAIN_MESSAGE);
+                    updateList();
                 } catch (BiffException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Fehlermeldung", JOptionPane.PLAIN_MESSAGE);
                 }
                 /*
                 try {
-                    chartDAO.saveChart(readChartFile.readCSVFile());
+                    chartDAOService.saveChart(readChartFile.readCSVFile());
                     JOptionPane.showMessageDialog(null, "Datei erfolgreich in Datenbank gespeichert.", "Info", JOptionPane.PLAIN_MESSAGE);
                     updateList();
                 } catch (FileNotFoundException | ParseException e) {
@@ -245,7 +243,7 @@ public class ChartApp {
 
     protected void updateList() {
         ((DefaultListModel) getListChart().getModel()).removeAllElements();
-        List<Chart> charts = chartDAO.loadAllCharts();
+        List<Chart> charts = chartDAOService.loadAllCharts();
         if (!charts.isEmpty()) {
             for (Chart chart : charts) {
                 ((DefaultListModel<Chart>) this.listChart.getModel()).addElement(chart);

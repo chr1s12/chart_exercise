@@ -1,6 +1,8 @@
 package de.guerz.bean;
 
 import de.guerz.dao.ChartDAO;
+import de.guerz.dao.ChartDAOService;
+import de.guerz.dao.ChartDAOServiceImpl;
 import de.guerz.utils.ReadChartFile;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,11 @@ public class ApplContext {
     @Bean
     public ChartDAO chartDAO() {
         return new ChartDAO();
+    }
+
+    @Bean
+    public ChartDAOService chartDAOService() {
+        return new ChartDAOServiceImpl();
     }
 
 

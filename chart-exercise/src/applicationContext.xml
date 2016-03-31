@@ -19,6 +19,4 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="chartDAO" ref="chartDAO" /> 
 		<property name="readChartFile" ref="readChartFile" /> 
     </bean>
-
-	
 </beans>

@@ -2,12 +2,14 @@ package de.guerz.dao;
 
 import de.guerz.domain.Chart;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import java.util.List;
 
-public class ChartDAO  implements IChartDAO {
+public class ChartDAO {
 
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -15,14 +17,12 @@ public class ChartDAO  implements IChartDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Chart> loadAllCharts() {
 		return (List<Chart>) new HibernateTemplate(sessionFactory).find("from Chart");   //loadAll(Chart.class);
 	}
 
 	// findChartByName(String name);
 
-	@Override
 	public Integer saveChart(Chart chart) {
 //		hibernateTemplate.getSessionFactory().getCurrentSession().setReadOnly(chart, false);
 //		hibernateTemplate.getSessionFactory().getCurrentSession().setFlushMode(FlushMode.AUTO);
